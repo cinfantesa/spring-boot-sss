@@ -10,12 +10,12 @@ import java.util.UUID;
 @Component
 @AllArgsConstructor
 public class CreateZone {
-    private final ZoneRepository zoneRepository;
+  private final ZoneRepository zoneRepository;
 
-    public Zone execute(Zone zone) {
-        zone.setId(UUID.randomUUID());
-        zoneRepository.save(zone);
+  public Zone execute(Zone zone) {
+    zone.setId(UUID.randomUUID());
+    zoneRepository.save(zone);
 
-        return zone;
-    }
+    return zone;
+  }
 }
