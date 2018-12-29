@@ -10,8 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static edu.cinfantes.springbootsss.domain.Priority.HIGH;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,8 +39,8 @@ public class CreateZoneTest {
     verify(zoneRepository, times(1)).save(argumentCaptor.capture());
     verifyNoMoreInteractions(zoneRepository);
 
-    assertNotNull(argumentCaptor.getValue().getId());
-    assertEquals(zone.getName(), argumentCaptor.getValue().getName());
-    assertEquals(zone.getPriority(), argumentCaptor.getValue().getPriority());
+    assertThat(argumentCaptor.getValue().getId()).isNotNull();
+    assertThat(argumentCaptor.getValue().getName()).isEqualTo(zone.getName());
+    assertThat(argumentCaptor.getValue().getPriority()).isEqualTo(zone.getPriority());
   }
 }

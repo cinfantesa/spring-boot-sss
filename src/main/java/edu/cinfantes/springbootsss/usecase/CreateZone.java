@@ -12,10 +12,8 @@ import java.util.UUID;
 public class CreateZone {
   private final ZoneRepository zoneRepository;
 
-  public Zone execute(Zone zone) {
+  public void execute(Zone zone) {
     zone.setId(UUID.randomUUID());
     zoneRepository.save(zone);
-
-    return zone;
   }
 }

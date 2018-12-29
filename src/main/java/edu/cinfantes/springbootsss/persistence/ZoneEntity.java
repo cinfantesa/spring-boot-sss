@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-class ZoneEntity {
+public class ZoneEntity {
   @Id
   @Type(type = "uuid-char")
   private UUID id;
