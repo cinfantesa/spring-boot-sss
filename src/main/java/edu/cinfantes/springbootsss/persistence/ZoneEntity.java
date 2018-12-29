@@ -1,5 +1,6 @@
 package edu.cinfantes.springbootsss.persistence;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Table(name = "IN_ZONE")
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 class ZoneEntity {
   @Id
   @Type(type = "uuid-char")
