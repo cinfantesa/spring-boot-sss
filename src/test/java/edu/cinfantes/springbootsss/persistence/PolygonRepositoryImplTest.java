@@ -2,10 +2,8 @@ package edu.cinfantes.springbootsss.persistence;
 
 import edu.cinfantes.springbootsss.domain.Coordinates;
 import edu.cinfantes.springbootsss.domain.Polygon;
-import edu.cinfantes.springbootsss.domain.Priority;
 import edu.cinfantes.springbootsss.domain.Zone;
 import edu.cinfantes.springbootsss.domain.repository.PolygonRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
