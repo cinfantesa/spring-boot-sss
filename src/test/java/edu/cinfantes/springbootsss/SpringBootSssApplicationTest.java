@@ -5,6 +5,8 @@ import edu.cinfantes.springbootsss.domain.Coordinates;
 import edu.cinfantes.springbootsss.domain.Polygon;
 import edu.cinfantes.springbootsss.domain.Priority;
 import edu.cinfantes.springbootsss.domain.Zone;
+import edu.cinfantes.springbootsss.domain.ZoneCriteria;
+import edu.cinfantes.springbootsss.domain.repository.ZoneRepository;
 import edu.cinfantes.springbootsss.persistence.SpringPolygonRepository;
 import edu.cinfantes.springbootsss.persistence.SpringZoneRepository;
 import edu.cinfantes.springbootsss.persistence.ZoneEntity;
@@ -32,6 +34,8 @@ public class SpringBootSssApplicationTest {
   private CreateZone createZone;
   @Autowired
   private AddPolygonToZone addPolygonToZone;
+  @Autowired
+  private ZoneRepository zoneRepository;
   @Autowired
   private SpringZoneRepository springZoneRepository;
   @Autowired
@@ -83,5 +87,12 @@ public class SpringBootSssApplicationTest {
   public void should_queries_work_again() {
     springZoneRepository.findAllByPolygonsSizeDesc().forEach(System.out::println);
     springZoneRepository.findByPolygonsId(UUID.fromString("5b6db652-30ab-4fd1-a1dc-0c707160de31"));
+  }
+
+  @Test
+  public void should_specifications_works() {
+    zoneRepository.findAllBy(ZoneCriteria.builder()
+      .priority(Priority.LOW)
+      .build()).forEach(System.out::println);
   }
 }
