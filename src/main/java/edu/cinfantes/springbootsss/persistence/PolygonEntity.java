@@ -1,8 +1,6 @@
 package edu.cinfantes.springbootsss.persistence;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -10,6 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "IN_ZONE_POLYGON")
+@ToString(exclude = "zone")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +18,6 @@ public class PolygonEntity {
   @Column(name = "idzp")
   private UUID id;
 
-  @Type(type = "uuid-char")
   @ManyToOne
   @JoinColumn(name = "idz")
   private ZoneEntity zone;
