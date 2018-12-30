@@ -93,6 +93,6 @@ public class SpringBootSssApplicationTest {
   public void should_specifications_works() {
     zoneRepository.findAllBy(ZoneCriteria.builder()
       .priority(Priority.LOW)
-      .build()).forEach(System.out::println);
+      .build(), 1, 5).forEach(System.out::println);
   }
 }

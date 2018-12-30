@@ -5,12 +5,12 @@ import edu.cinfantes.springbootsss.domain.Zone;
 import edu.cinfantes.springbootsss.domain.ZoneCriteria;
 import edu.cinfantes.springbootsss.domain.repository.ZoneRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static edu.cinfantes.springbootsss.persistence.ZoneSpecifications.createdBetween;
 import static edu.cinfantes.springbootsss.persistence.ZoneSpecifications.nameIs;
@@ -38,16 +38,16 @@ public class ZoneRepositoryImpl implements ZoneRepository {
   }
 
   @Override
-  public List<Zone> findAllBy(ZoneCriteria criteria) {
+  public Page<Zone> findAllBy(ZoneCriteria criteria, int page, int size) {
+    PageRequest pageRequest = PageRequest.of(page, size);
     Specification<ZoneEntity> specs = Specification.where(null);
 
     specs = appendNameSpecification(criteria, specs);
     specs = appendCreatedBetweenSpecification(criteria, specs);
     specs = appendPrioritySpecification(criteria, specs);
 
-    return springZoneRepository.findAll(specs).stream()
-      .map(this::mapToZone)
-      .collect(Collectors.toList());
+    return springZoneRepository.findAll(specs, pageRequest)
+      .map(this::mapToZone);
   }
 
   private Zone mapToZone(ZoneEntity entity) {
