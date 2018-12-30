@@ -54,8 +54,25 @@ public class PolygonRepositoryImplTest {
 
     polygonRepository.save(polygon);
 
+    PolygonEntity expectedPolygon = PolygonEntity.builder()
+      .id(polygon.getId())
+      .zone(ZoneEntity.builder()
+        .id(existingZoneId)
+        .name("Nombre")
+        .priority(HIGH.getValue())
+        .build())
+      .x1(1)
+      .y1(1)
+      .x2(2)
+      .y2(2)
+      .x3(3)
+      .y3(3)
+      .x4(4)
+      .y4(4)
+      .build();
+
     List<PolygonEntity> all = springPolygonRepository.findAll();
     assertThat(all.size()).isEqualTo(1);
-    assertThat(all.get(0)).isEqualToComparingFieldByField(polygon);
+    assertThat(expectedPolygon).isEqualToComparingFieldByFieldRecursively(all.get(0));
   }
 }

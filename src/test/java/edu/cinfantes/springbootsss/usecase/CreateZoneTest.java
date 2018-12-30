@@ -1,6 +1,7 @@
 package edu.cinfantes.springbootsss.usecase;
 
 import edu.cinfantes.springbootsss.domain.Zone;
+import edu.cinfantes.springbootsss.domain.exception.ZoneNotFoundException;
 import edu.cinfantes.springbootsss.domain.repository.ZoneRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static edu.cinfantes.springbootsss.domain.Priority.HIGH;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,6 +25,13 @@ public class CreateZoneTest {
   @Before
   public void setUp() {
     createZone = new CreateZone(zoneRepository);
+  }
+
+  @Test
+  public void should_throw_exception_when_zone_is_null() {
+    Throwable thrown = catchThrowable(() -> createZone.execute(null));
+
+    assertThat(thrown).isInstanceOf(ZoneNotFoundException.class);
   }
 
   @Test

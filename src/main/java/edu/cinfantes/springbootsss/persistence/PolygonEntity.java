@@ -20,7 +20,8 @@ public class PolygonEntity {
   private UUID id;
 
   @Type(type = "uuid-char")
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
+  @JoinColumn(name = "idz")
   private ZoneEntity zone;
 
   private int x1;
