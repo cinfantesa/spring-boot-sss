@@ -4,3 +4,8 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: true
+    default-property-inclusion: non_null

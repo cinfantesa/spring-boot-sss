@@ -7,6 +7,7 @@ import edu.cinfantes.springbootsss.domain.Zone;
 import edu.cinfantes.springbootsss.usecase.AddPolygonToZone;
 import edu.cinfantes.springbootsss.usecase.CreateZone;
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/zone")
+@ExposesResourceFor(Zone.class)
 public class ZoneController {
   private final CreateZone createZone;
   private final AddPolygonToZone addPolygonToZone;

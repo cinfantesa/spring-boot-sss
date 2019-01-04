@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
+@Data
 @Table(name = "IN_ZONE_POLYGON")
 @ToString(exclude = "zone")
 @Builder
