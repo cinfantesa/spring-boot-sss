@@ -7,12 +7,14 @@ import edu.cinfantes.springbootsss.domain.Priority;
 import edu.cinfantes.springbootsss.domain.Zone;
 import edu.cinfantes.springbootsss.domain.ZoneCriteria;
 import edu.cinfantes.springbootsss.domain.repository.ZoneRepository;
+import edu.cinfantes.springbootsss.persistence.AssetEntity;
+import edu.cinfantes.springbootsss.persistence.SpringAssetRepository;
 import edu.cinfantes.springbootsss.persistence.SpringPolygonRepository;
 import edu.cinfantes.springbootsss.persistence.SpringZoneRepository;
 import edu.cinfantes.springbootsss.persistence.ZoneEntity;
 import edu.cinfantes.springbootsss.usecase.AddPolygonToZone;
 import edu.cinfantes.springbootsss.usecase.CreateZone;
-import org.joda.time.DateTime;
+import edu.cinfantes.springbootsss.usecase.MarkAssetToEvaluate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import javax.transaction.Transactional;
 import java.util.UUID;
 
 import static edu.cinfantes.springbootsss.domain.Priority.HIGH;
+import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.joda.time.DateTime.now;
@@ -37,9 +40,13 @@ public class SpringBootSssApplicationTest {
   @Autowired
   private ZoneRepository zoneRepository;
   @Autowired
+  private MarkAssetToEvaluate markAssetToEvaluate;
+  @Autowired
   private SpringZoneRepository springZoneRepository;
   @Autowired
   private SpringPolygonRepository springPolygonRepository;
+  @Autowired
+  private SpringAssetRepository springAssetRepository;
 
   @Test
   public void should_insert_one_zone() {
@@ -94,5 +101,25 @@ public class SpringBootSssApplicationTest {
     zoneRepository.findAllBy(ZoneCriteria.builder()
       .priority(Priority.LOW)
       .build(), 1, 5).forEach(System.out::println);
+  }
+
+  @Test
+  public void should_insert_asset() {
+    UUID zoneId = randomUUID();
+    springZoneRepository.save(ZoneEntity.builder()
+      .id(zoneId)
+      .name("nombre")
+      .priority(HIGH.getValue())
+      .build());
+
+    UUID assetId = randomUUID();
+    springAssetRepository.save(AssetEntity.builder()
+      .id(assetId)
+      .name("Asset")
+      .build());
+
+    markAssetToEvaluate.execute(singletonList(assetId), zoneId);
+
+    assertThat(springAssetRepository.findAll().size()).isEqualTo(1);
   }
 }
