@@ -15,6 +15,7 @@ import edu.cinfantes.springbootsss.persistence.ZoneEntity;
 import edu.cinfantes.springbootsss.usecase.AddPolygonToZone;
 import edu.cinfantes.springbootsss.usecase.CreateZone;
 import edu.cinfantes.springbootsss.usecase.MarkAssetToEvaluate;
+import edu.cinfantes.springbootsss.usecase.UnMarkAssetToEvaluate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,8 @@ public class SpringBootSssApplicationTest {
   private ZoneRepository zoneRepository;
   @Autowired
   private MarkAssetToEvaluate markAssetToEvaluate;
+  @Autowired
+  private UnMarkAssetToEvaluate unMarkAssetToEvaluate;
   @Autowired
   private SpringZoneRepository springZoneRepository;
   @Autowired
@@ -104,7 +107,7 @@ public class SpringBootSssApplicationTest {
   }
 
   @Test
-  public void should_insert_asset() {
+  public void should_mark_asset() {
     UUID zoneId = randomUUID();
     springZoneRepository.save(ZoneEntity.builder()
       .id(zoneId)
@@ -121,5 +124,26 @@ public class SpringBootSssApplicationTest {
     markAssetToEvaluate.execute(singletonList(assetId), zoneId);
 
     assertThat(springAssetRepository.findAll().size()).isEqualTo(1);
+  }
+
+  @Test
+  public void should_unmark_assert() {
+    UUID zoneId = randomUUID();
+    springZoneRepository.save(ZoneEntity.builder()
+      .id(zoneId)
+      .name("nombre")
+      .priority(HIGH.getValue())
+      .build());
+
+    UUID assetId = randomUUID();
+    springAssetRepository.save(AssetEntity.builder()
+      .id(assetId)
+      .name("Asset")
+      .build());
+
+    markAssetToEvaluate.execute(singletonList(assetId), zoneId);
+    unMarkAssetToEvaluate.execute(singletonList(assetId));
+
+    assertThat(springAssetRepository.findAll().get(0).getZone()).isNull();
   }
 }
