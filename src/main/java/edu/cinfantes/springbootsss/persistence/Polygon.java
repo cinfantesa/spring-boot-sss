@@ -1,6 +1,7 @@
 package edu.cinfantes.springbootsss.persistence;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,15 +14,20 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PolygonEntity {
+public class Polygon {
   @Id
   @Type(type = "uuid-char")
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(
+    name = "UUID",
+    strategy = "org.hibernate.id.UUIDGenerator"
+  )
   @Column(name = "idzp")
   private UUID id;
 
   @ManyToOne
   @JoinColumn(name = "idz")
-  private ZoneEntity zone;
+  private Zone zone;
 
   private int x1;
   private int y1;

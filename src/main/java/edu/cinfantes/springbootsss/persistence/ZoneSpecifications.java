@@ -9,15 +9,15 @@ class ZoneSpecifications {
   private static final String CREATED_COLUMN = "created";
   private static final String PRIORITY_COLUMN = "priority";
 
-  static Specification<ZoneEntity> nameIs(String name) {
-    return (Specification<ZoneEntity>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(NAME_COLUMN), name);
+  static Specification<Zone> nameIs(String name) {
+    return (Specification<Zone>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(NAME_COLUMN), name);
   }
 
-  static Specification<ZoneEntity> createdBetween(Date from, Date to) {
-    return (Specification<ZoneEntity>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.between(root.get(CREATED_COLUMN), from, to);
+  static Specification<Zone> createdBetween(Date from, Date to) {
+    return (Specification<Zone>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.between(root.get(CREATED_COLUMN), from, to);
   }
 
-  static Specification<ZoneEntity> priorityIs(int priority) {
-    return (Specification<ZoneEntity>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(PRIORITY_COLUMN), priority);
+  static Specification<Zone> priorityIs(int priority) {
+    return (Specification<Zone>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(PRIORITY_COLUMN), priority);
   }
 }

@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
@@ -26,11 +28,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class ZoneEntity {
+public class Zone {
   @Id
   @Type(type = "uuid-char")
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(
+    name = "UUID",
+    strategy = "org.hibernate.id.UUIDGenerator"
+  )
   private UUID id;
 
+  @RestResource(exported = false)
   @CreatedDate
   private Date created;
 
@@ -40,7 +48,9 @@ public class ZoneEntity {
   private String name;
   private int priority;
 
-  @OneToMany
-  @JoinColumn(name = "idz")
-  private List<PolygonEntity> polygons;
+  @OneToMany(mappedBy = "zone")
+  private List<Polygon> polygons;
+
+  @OneToMany(mappedBy = "zone")
+  private List<Asset> assets;
 }

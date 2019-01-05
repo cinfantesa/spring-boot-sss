@@ -1,8 +1,11 @@
 package edu.cinfantes.springbootsss.persistence;
 
+import org.springframework.data.rest.core.config.Projection;
+
 import java.util.List;
 import java.util.UUID;
 
+@Projection(name = "zoneProjection", types = Zone.class)
 public interface ZoneProjection {
   UUID getId();
   String getName();
